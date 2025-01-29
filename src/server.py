@@ -102,6 +102,7 @@ class Server:
         
         self.sessions[username].send(message)
         frame_text(f'Successfully sent "{message}"', title="Success", color=Fore.GREEN)
+        frame_text(self.sessions[username].recv(), title="Response", color=Fore.MAGENTA)
     
     def _command_exit(self, *args, **kwargs):
         sys.exit(0)
